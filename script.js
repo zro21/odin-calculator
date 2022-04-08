@@ -25,3 +25,14 @@ function operate(operator, a, b) {
     return divide(a, b);
   }
 }
+
+const display = document.querySelector('#display');
+const btnOne = document.querySelector('#btn-one');
+btnOne.addEventListener('click', () => {
+  display.textContent += btnOne.textContent;
+});
+
+const btnClear = document.querySelector('#btn-clear');
+btnClear.addEventListener('click', () => {
+  display.textContent = '';
+});
