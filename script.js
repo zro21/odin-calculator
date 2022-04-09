@@ -28,7 +28,7 @@ function operate(operator, a, b) {
 
 const display = document.querySelector('#display');
 
-const buttonsNumber = document.querySelectorAll('.btn-number');
+const buttonsNumber = document.querySelectorAll('button.btn-number');
 buttonsNumber.forEach(button => {
   button.addEventListener('click', () => {
     display.textContent += button.textContent;
@@ -40,9 +40,9 @@ let operator = '';
 let numberFirst = '';
 buttonsOperator.forEach(button => {
   button.addEventListener('click', () => {
-    operator = button.textContent;
-    numberFirst = Number(display.textContent);
-    display.textContent = '';
+      operator = button.textContent;
+      numberFirst = Number(display.textContent);
+      display.textContent = '';
   })
 });
 
@@ -50,8 +50,8 @@ const buttonEquals = document.querySelector('#btn-equals');
 let numberSecond = '';
 buttonEquals.addEventListener('click', () => {
   numberSecond = Number(display.textContent);
-  display.textContent = '';
   display.textContent = operate(operator, numberFirst, numberSecond);
+  numberFirst = '';
 });
 
 const buttonClear = document.querySelector('#btn-clear');
@@ -61,3 +61,8 @@ buttonClear.addEventListener('click', () => {
   numberFirst = '';
   numberSecond = '';
 });
+
+const buttonDelete = document.querySelector('#btn-del');
+buttonDelete.addEventListener('click', () => {
+  display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+})
