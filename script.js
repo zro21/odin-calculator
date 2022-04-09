@@ -27,12 +27,37 @@ function operate(operator, a, b) {
 }
 
 const display = document.querySelector('#display');
-const btnOne = document.querySelector('#btn-one');
-btnOne.addEventListener('click', () => {
-  display.textContent += btnOne.textContent;
+
+const buttonsNumber = document.querySelectorAll('.btn-number');
+buttonsNumber.forEach(button => {
+  button.addEventListener('click', () => {
+    display.textContent += button.textContent;
+  })
 });
 
-const btnClear = document.querySelector('#btn-clear');
-btnClear.addEventListener('click', () => {
+const buttonsOperator = document.querySelectorAll('.btn-operator');
+let operator = '';
+let numberFirst = '';
+buttonsOperator.forEach(button => {
+  button.addEventListener('click', () => {
+    operator = button.textContent;
+    numberFirst = Number(display.textContent);
+    display.textContent = '';
+  })
+});
+
+const buttonEquals = document.querySelector('#btn-equals');
+let numberSecond = '';
+buttonEquals.addEventListener('click', () => {
+  numberSecond = Number(display.textContent);
   display.textContent = '';
+  display.textContent = operate(operator, numberFirst, numberSecond);
+});
+
+const buttonClear = document.querySelector('#btn-clear');
+buttonClear.addEventListener('click', () => {
+  display.textContent = '';
+  operator = '';
+  numberFirst = '';
+  numberSecond = '';
 });
