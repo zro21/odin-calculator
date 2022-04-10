@@ -31,6 +31,10 @@ const display = document.querySelector('#display');
 const buttonsNumber = document.querySelectorAll('button.btn-number');
 buttonsNumber.forEach(button => {
   button.addEventListener('click', () => {
+    if (result != 0) {
+      display.textContent = '';
+      result = 0;
+    }
     display.textContent += button.textContent;
   })
 });
@@ -40,9 +44,21 @@ let operator = '';
 let numberFirst = '';
 buttonsOperator.forEach(button => {
   button.addEventListener('click', () => {
+    if (numberFirst != '') {
+      numberSecond = Number(display.textContent);
+      if (operator === '/' && numberSecond === 0) {
+        display.textContent = 'Divison by 0 not possible.';
+      } else {
+        result = operate(operator, numberFirst, numberSecond);
+      display.textContent = result;
+      operator = button.textContent;
+      numberFirst = Number(display.textContent);
+      }
+    } else {
       operator = button.textContent;
       numberFirst = Number(display.textContent);
       display.textContent = '';
+    }
   })
 });
 
@@ -52,10 +68,10 @@ let result = 0;
 buttonEquals.addEventListener('click', () => {
   numberSecond = Number(display.textContent);
   if (operator === '/' && numberSecond === 0) {
-    display.textContent = 'Divison by 0. Start again!';
+    display.textContent = 'Divison by 0 not possible.';
   } else {
     result = operate(operator, numberFirst, numberSecond);
-    if (Number.isInteger(result) === false) {
+    if (!Number.isInteger(result)) {
       result = result.toFixed(8);
     }
     display.textContent = result;
