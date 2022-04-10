@@ -48,10 +48,19 @@ buttonsOperator.forEach(button => {
 
 const buttonEquals = document.querySelector('#btn-equals');
 let numberSecond = '';
+let result = 0;
 buttonEquals.addEventListener('click', () => {
   numberSecond = Number(display.textContent);
-  display.textContent = operate(operator, numberFirst, numberSecond);
-  numberFirst = '';
+  if (operator === '/' && numberSecond === 0) {
+    display.textContent = 'Divison by 0. Start again!';
+  } else {
+    result = operate(operator, numberFirst, numberSecond);
+    if (Number.isInteger(result) === false) {
+      result = result.toFixed(8);
+    }
+    display.textContent = result;
+    numberFirst = '';
+  }
 });
 
 const buttonClear = document.querySelector('#btn-clear');
@@ -65,4 +74,13 @@ buttonClear.addEventListener('click', () => {
 const buttonDelete = document.querySelector('#btn-del');
 buttonDelete.addEventListener('click', () => {
   display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+})
+
+const buttonNegative = document.querySelector('#btn-negative');
+buttonNegative.addEventListener('click', () => {
+  if (!display.textContent.includes('-')) {
+    display.textContent = '-' + display.textContent;
+  } else {
+    display.textContent = display.textContent.slice(1);
+  }
 })
