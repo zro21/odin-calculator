@@ -26,16 +26,30 @@ function operate(operator, a, b) {
   }
 }
 
+function checkFloat() {
+  if (display.textContent.includes('.')) {
+    buttonFloat.disabled = true;
+  } else {
+    buttonFloat.disabled = false;
+  }
+}
+
 const display = document.querySelector('#display');
+const buttonFloat = document.querySelector('#btn-float');
 
 const buttonsNumber = document.querySelectorAll('button.btn-number');
 buttonsNumber.forEach(button => {
   button.addEventListener('click', () => {
-    if (result != 0) {
-      display.textContent = '';
-      result = 0;
+    if (display.textContent.length < 12) {
+      if (result != 0) {
+        display.textContent = '';
+        result = 0;
+      }
+      display.textContent += button.textContent;
+      checkFloat();
+    } else {
+      alert('Not more than 12 digits allowed!');
     }
-    display.textContent += button.textContent;
   })
 });
 
@@ -68,7 +82,7 @@ let result = 0;
 buttonEquals.addEventListener('click', () => {
   numberSecond = Number(display.textContent);
   if (operator === '/' && numberSecond === 0) {
-    display.textContent = 'Divison by 0 not possible.';
+    alert('Divison by 0 is not possible!');
   } else {
     result = operate(operator, numberFirst, numberSecond);
     if (!Number.isInteger(result)) {
@@ -85,11 +99,13 @@ buttonClear.addEventListener('click', () => {
   operator = '';
   numberFirst = '';
   numberSecond = '';
+  buttonFloat.disabled = false;
 });
 
 const buttonDelete = document.querySelector('#btn-del');
 buttonDelete.addEventListener('click', () => {
   display.textContent = display.textContent.slice(0, display.textContent.length - 1);
+  checkFloat();
 })
 
 const buttonNegative = document.querySelector('#btn-negative');
